@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Quick opener for Zabbix screen using percol or peco.",
    "author" : [
       "FUJIWARA Shunichiro <fujiwara.shunichiro@gmail.com>"
    ],
@@ -44,6 +44,15 @@
       },
       "runtime" : {
          "requires" : {
+            "Cache::FastMmap" : "0",
+            "Config::Pit" : "0",
+            "HTTP::Request::Common" : "0",
+            "IPC::Open2" : "0",
+            "JSON" : "0",
+            "LWP::UserAgent" : "0",
+            "Log::Minimal" : "0",
+            "Mouse" : "0",
+            "Try::Tiny" : "0",
             "perl" : "5.008005"
          }
       },
@@ -54,5 +63,17 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/fujiwara/App-OpenZabbixScreen/issues"
+      },
+      "homepage" : "https://github.com/fujiwara/App-OpenZabbixScreen",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/fujiwara/App-OpenZabbixScreen.git",
+         "web" : "https://github.com/fujiwara/App-OpenZabbixScreen"
+      }
+   },
+   "version" : "0.02",
+   "x_authority" : "cpan:FUJIWARA"
 }

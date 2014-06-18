@@ -11,7 +11,7 @@ use Config::Pit;
 use Log::Minimal;
 use Cache::FastMmap;
 use File::Spec;
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 our $EXPIRES = 3600;
 
 sub run {
