@@ -6,7 +6,7 @@ use Encode;
 sub run {
     my $class = shift;
     my %args  = @_;
-    App::OpenZabbix->run(
+    App::OpenZabbix->_run(
         command => $args{command},
         api_method => "host.get",
         api_args   => {

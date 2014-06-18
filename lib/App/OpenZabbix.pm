@@ -15,11 +15,28 @@ use Log::Minimal;
 use Cache::FastMmap;
 use File::Spec;
 use Carp;
+use Pod::Usage qw/ pod2usage /;
+use String::CamelCase qw/ camelize /;
+
 our $VERSION = "0.02";
 our $EXPIRES = 3600;
 our $Cache;
 
 sub run {
+    my $class = shift;
+    my %args  = @_;
+    pod2usage() unless defined $args{class};
+
+    my $sub_class = "${class}::" . camelize($args{class});
+    if ( my $sub = $sub_class->can("run") ) {
+        $sub->();
+    }
+    else {
+        pod2usage();
+    }
+}
+
+sub _run {
     my $class = shift;
     my %args  = @_;
     my $command       = defined $args{command} ? $args{command} : "percol";
@@ -83,6 +100,7 @@ sub run {
 }
 
 1;
+
 __END__
 
 =encoding utf-8
@@ -93,12 +111,12 @@ App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 =head1 SYNOPSIS
 
-    $ open_zabbix_screen [--command peco/percol/or etc.]
+    $ open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
       (at first, Config::Pit opens $EDITOR. Enter your Zabbix URL, user, password.)
 
 =head1 DESCRIPTION
 
-App::OpenZabbix is a quick opener for Zabbix screen.
+App::OpenZabbix is a quick opener for Zabbix screen, host, maintenance web interface.
 
 =head1 REQUIREMENTS
 

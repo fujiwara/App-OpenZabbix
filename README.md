@@ -4,12 +4,12 @@ App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 # SYNOPSIS
 
-    $ open_zabbix_screen [--command peco/percol/or etc.]
+    $ open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
       (at first, Config::Pit opens $EDITOR. Enter your Zabbix URL, user, password.)
 
 # DESCRIPTION
 
-App::OpenZabbix is a quick opener for Zabbix screen.
+App::OpenZabbix is a quick opener for Zabbix screen, host, maintenance web interface.
 
 # REQUIREMENTS
 
