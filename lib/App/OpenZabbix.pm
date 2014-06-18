@@ -1,9 +1,11 @@
-package App::OpenZabbixScreen;
+package App::OpenZabbix;
 use 5.008005;
 use strict;
 use warnings;
 
-use App::OpenZabbixScreen::ZabbixAPI;
+use App::OpenZabbix::ZabbixAPI;
+use App::OpenZabbix::Screen;
+use App::OpenZabbix::Host;
 use IPC::Open2;
 use IO::Handle;
 use Encode;
@@ -11,13 +13,21 @@ use Config::Pit;
 use Log::Minimal;
 use Cache::FastMmap;
 use File::Spec;
+use Carp;
 our $VERSION = "0.02";
 our $EXPIRES = 3600;
+our $Cache;
 
 sub run {
     my $class = shift;
     my %args  = @_;
-    my $command = defined $args{command} ? $args{command} : "percol";
+    my $command       = defined $args{command} ? $args{command} : "percol";
+
+    my $api_method    = $args{api_method} or croak("api_method is required");
+    my $api_args      = $args{api_args} or croak("api_args is required");
+    my $printer       = $args{printer} or croak("printer sub is required");
+    my $parser        = $args{parser} or croak("parser sub is required");
+    my $url_generator = $args{url_generator} or croak("url_generator sub is required");
 
     my $config = pit_get(
         "zabbix", require => {
@@ -42,28 +52,29 @@ sub run {
         })
     }
     my $cache = Cache::FastMmap->new(
-        share_file => File::Spec->tmpdir . "/zabbix_screen",
+        share_file => File::Spec->tmpdir . "/open_zabbix",
     );
-    my $screens;
-    if ( $screens = $cache->get("screens") ) {
-        debugf "hit screens cache";
+    my $cache_key = ddf([ $api_method, $api_args ]);
+    my $results;
+    if ( $results = $cache->get($cache_key) ) {
+        debugf "hit cache $cache_key";
     }
     else {
-        debugf "miss screens cache";
-        $screens = $api->call("screen.get", { output => "extend" });
-        $cache->set( screens => $screens, $EXPIRES );
+        debugf "miss cache $cache_key";
+        $results = $api->call($api_method, $api_args);
+        $cache->set( $cache_key => $results, $EXPIRES );
     }
 
     # select by external command
     my $pid = open2(my $out, my $in, $command) or die "Can't open $command: $!";
-    for my $s (@$screens) {
-        $in->print($s->{screenid}, " ", encode_utf8($s->{name}), "\n");
+    for my $r (@$results) {
+        $in->print( $printer->($r) );
     }
     $in->close;
     my $selected = <$out>;
-    my ($screenid) = split / /, $selected, 2;
+    my @parsed = $parser->($selected);
 
-    exec "open", "${url}screens.php?elementid=$screenid";
+    exec "open", "${url}" . $url_generator->(@parsed);
 
     die;     # will not be reached here
 }

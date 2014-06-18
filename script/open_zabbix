@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use App::OpenZabbix;
+use String::CamelCase qw/ camelize /;
+use Getopt::Long ();
+
+my $command;
+Getopt::Long::GetOptions("command=s" => \$command);
+my $class = sprintf "App::OpenZabbix::%s", camelize(shift);
+$class->run( command => $command, );
