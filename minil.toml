@@ -2,3 +2,5 @@ name = "App-OpenZabbixScreen"
 # badges = ["travis"]
 authority="cpan:FUJIWARA"
 
+[release]
+do_not_upload_to_cpan=true
