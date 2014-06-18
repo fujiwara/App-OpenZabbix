@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "App-OpenZabbixScreen",
+   "name" : "App-OpenZabbix",
    "no_index" : {
       "directory" : [
          "t",
@@ -52,6 +52,7 @@
             "LWP::UserAgent" : "0",
             "Log::Minimal" : "0",
             "Mouse" : "0",
+            "String::CamelCase" : "0",
             "Try::Tiny" : "0",
             "perl" : "5.008005"
          }

@@ -1,4 +1,4 @@
-package App::OpenZabbixScreen::ZabbixAPI;
+package App::OpenZabbix::ZabbixAPI;
 
 use strict;
 use warnings;

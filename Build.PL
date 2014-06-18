@@ -23,8 +23,8 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'App-OpenZabbixScreen',
-    module_name     => 'App::OpenZabbixScreen',
+    name            => 'App-OpenZabbix',
+    module_name     => 'App::OpenZabbix',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],

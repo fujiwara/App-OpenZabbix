@@ -1,6 +1,6 @@
 # NAME
 
-App::OpenZabbixScreen - Quick opener for Zabbix screen using percol or peco.
+App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 # SYNOPSIS
 
@@ -9,7 +9,7 @@ App::OpenZabbixScreen - Quick opener for Zabbix screen using percol or peco.
 
 # DESCRIPTION
 
-App::OpenZabbixScreen is a quick opener for Zabbix screen.
+App::OpenZabbix is a quick opener for Zabbix screen.
 
 # REQUIREMENTS
 

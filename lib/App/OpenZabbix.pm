@@ -6,6 +6,7 @@ use warnings;
 use App::OpenZabbix::ZabbixAPI;
 use App::OpenZabbix::Screen;
 use App::OpenZabbix::Host;
+use App::OpenZabbix::Maintenance;
 use IPC::Open2;
 use IO::Handle;
 use Encode;
@@ -38,7 +39,7 @@ sub run {
     );
 
     my $url = delete $config->{url};
-    my $api = App::OpenZabbixScreen::ZabbixAPI->new( url => $url );
+    my $api = App::OpenZabbix::ZabbixAPI->new( url => $url );
     if (my $auth = $config->{auth}) {
         $api->auth($auth);
     }
@@ -72,6 +73,8 @@ sub run {
     }
     $in->close;
     my $selected = <$out>;
+    exit 1 unless defined $selected;
+
     my @parsed = $parser->($selected);
 
     exec "open", "${url}" . $url_generator->(@parsed);
@@ -86,7 +89,7 @@ __END__
 
 =head1 NAME
 
-App::OpenZabbixScreen - Quick opener for Zabbix screen using percol or peco.
+App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 =head1 SYNOPSIS
 
@@ -95,7 +98,7 @@ App::OpenZabbixScreen - Quick opener for Zabbix screen using percol or peco.
 
 =head1 DESCRIPTION
 
-App::OpenZabbixScreen is a quick opener for Zabbix screen.
+App::OpenZabbix is a quick opener for Zabbix screen.
 
 =head1 REQUIREMENTS
 

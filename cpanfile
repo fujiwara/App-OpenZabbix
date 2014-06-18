@@ -9,6 +9,7 @@ requires 'LWP::UserAgent';
 requires 'Log::Minimal';
 requires 'Mouse';
 requires 'Try::Tiny';
+requires 'String::CamelCase';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
