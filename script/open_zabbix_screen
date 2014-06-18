@@ -3,5 +3,8 @@
 use strict;
 use warnings;
 use App::OpenZabbixScreen;
+use Getopt::Long ();
 
-App::OpenZabbixScreen->run;
+my $command;
+Getopt::Long::GetOptions("command=s" => \$command);
+App::OpenZabbixScreen->run( command => $command );

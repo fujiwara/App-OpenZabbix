@@ -12,8 +12,13 @@ use Log::Minimal;
 use Cache::FastMmap;
 use File::Spec;
 our $VERSION = "0.01";
+our $EXPIRES = 3600;
 
 sub run {
+    my $class = shift;
+    my %args  = @_;
+    my $command = defined $args{command} ? $args{command} : "percol";
+
     my $config = pit_get(
         "zabbix", require => {
             "url"      => "zabbix url endpoint (e.g. http://example.com/zabbix/)",
@@ -46,11 +51,11 @@ sub run {
     else {
         debugf "miss screens cache";
         $screens = $api->call("screen.get", { output => "extend" });
-        $cache->set( screens => $screens, 300 );
+        $cache->set( screens => $screens, $EXPIRES );
     }
 
-    # select by percol
-    my $pid = open2(my $out, my $in, 'percol') or die "Can't open percol: $!";
+    # select by external command
+    my $pid = open2(my $out, my $in, $command) or die "Can't open $command: $!";
     for my $s (@$screens) {
         $in->print($s->{screenid}, " ", encode_utf8($s->{name}), "\n");
     }
@@ -70,11 +75,11 @@ __END__
 
 =head1 NAME
 
-App::OpenZabbixScreen - Quick opener for Zabbix screen using percol.
+App::OpenZabbixScreen - Quick opener for Zabbix screen using percol or peco.
 
 =head1 SYNOPSIS
 
-    $ open_zabbix_screen
+    $ open_zabbix_screen [--command peco/percol/or etc.]
       (at first, Config::Pit opens $EDITOR. Enter your Zabbix URL, user, password.)
 
 =head1 DESCRIPTION
@@ -84,6 +89,8 @@ App::OpenZabbixScreen is a quick opener for Zabbix screen.
 =head1 REQUIREMENTS
 
 percol L<https://github.com/mooz/percol>
+
+peco L<https://github.com/lestrrat/peco>
 
 =head1 LICENSE
 
