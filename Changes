@@ -2,6 +2,10 @@ Revision history for Perl extension App-OpenZabbix
 
 {{$NEXT}}
 
+0.04 2014-06-19T03:05:29Z
+
+    - add Webcheck
+
 0.03 2014-06-19T01:32:53Z
 
     - rename to App::OpenZabbix
