@@ -19,6 +19,7 @@ use Carp;
 use Pod::Usage qw/ pod2usage /;
 use Pod::Find qw/ pod_where /;
 use String::CamelCase qw/ camelize /;
+use Try::Tiny;
 
 our $VERSION = "0.04";
 our $EXPIRES = 3600;
@@ -64,7 +65,20 @@ sub _run {
     }
     else {
         debugf("login zabbix api...");
-        $api->login(%$config);
+        my $err;
+        try {
+            $api->login(%$config);
+        }
+        catch {
+            $err = $_;
+        };
+        if ( $err ) {
+            critf "zabbix api login failed. url:%s user:%s password:%s",
+                $url,
+                $config->{user},
+                "*" x (length $config->{password});
+            exit 1;
+        }
         pit_set("zabbix", data => {
             %$config,
             url  => $url,
