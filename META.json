@@ -66,13 +66,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/fujiwara/App-OpenZabbixScreen/issues"
+         "web" : "https://github.com/fujiwara/App-OpenZabbix/issues"
       },
-      "homepage" : "https://github.com/fujiwara/App-OpenZabbixScreen",
+      "homepage" : "https://github.com/fujiwara/App-OpenZabbix",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/fujiwara/App-OpenZabbixScreen.git",
-         "web" : "https://github.com/fujiwara/App-OpenZabbixScreen"
+         "url" : "git://github.com/fujiwara/App-OpenZabbix.git",
+         "web" : "https://github.com/fujiwara/App-OpenZabbix"
       }
    },
    "version" : "0.02",

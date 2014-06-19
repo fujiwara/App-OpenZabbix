@@ -16,23 +16,24 @@ use Cache::FastMmap;
 use File::Spec;
 use Carp;
 use Pod::Usage qw/ pod2usage /;
+use Pod::Find qw/ pod_where /;
 use String::CamelCase qw/ camelize /;
 
 our $VERSION = "0.02";
 our $EXPIRES = 3600;
-our $Cache;
 
 sub run {
     my $class = shift;
     my %args  = @_;
-    pod2usage() unless defined $args{class};
+    pod2usage( -input => pod_where({ -inc => 1 }, __PACKAGE__) )
+        unless defined $args{class};
 
     my $sub_class = "${class}::" . camelize($args{class});
     if ( my $sub = $sub_class->can("run") ) {
         $sub->();
     }
     else {
-        pod2usage();
+        pod2usage( -input => pod_where({ -inc => 1 }, __PACKAGE__) )
     }
 }
 
@@ -111,7 +112,7 @@ App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 =head1 SYNOPSIS
 
-    $ open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
+    open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
       (at first, Config::Pit opens $EDITOR. Enter your Zabbix URL, user, password.)
 
 =head1 DESCRIPTION
