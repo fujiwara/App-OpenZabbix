@@ -30,7 +30,7 @@ sub run {
 
     my $sub_class = "${class}::" . camelize($args{class});
     if ( my $sub = $sub_class->can("run") ) {
-        $sub->();
+        $sub->($sub_class, %args);
     }
     else {
         pod2usage( -input => pod_where({ -inc => 1 }, __PACKAGE__) )
