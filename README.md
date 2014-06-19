@@ -4,7 +4,7 @@ App::OpenZabbix - Quick opener for Zabbix screen using percol or peco.
 
 # SYNOPSIS
 
-    $ open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
+    open_zabbix ( screen | host | maintenance ) [--command peco/percol/or etc.]
       (at first, Config::Pit opens $EDITOR. Enter your Zabbix URL, user, password.)
 
 # DESCRIPTION

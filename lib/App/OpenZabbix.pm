@@ -19,7 +19,7 @@ use Pod::Usage qw/ pod2usage /;
 use Pod::Find qw/ pod_where /;
 use String::CamelCase qw/ camelize /;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 our $EXPIRES = 3600;
 
 sub run {
